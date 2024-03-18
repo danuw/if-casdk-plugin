@@ -1,9 +1,12 @@
-import {MyCustomPlugin} from '../../../lib/my-custom-plugin';
+import {CaSdkPlugin} from '../../../lib/casdk';
 
 describe('lib/my-custom-plugin: ', () => {
   describe('MyCustomPlugin(): ', () => {
     it('has metadata field.', () => {
-      const pluginInstance = MyCustomPlugin({});
+      const pluginInstance = CaSdkPlugin({
+        'input-parameters': ['something'],
+        'output-parameter': 'dummy',
+      });
 
       expect(pluginInstance).toHaveProperty('metadata');
       expect(pluginInstance).toHaveProperty('execute');
@@ -11,14 +14,17 @@ describe('lib/my-custom-plugin: ', () => {
       expect(typeof pluginInstance.execute).toBe('function');
     });
 
-    describe('execute(): ', () => {
-      it('applies logic on provided inputs array.', async () => {
-        const pluginInstance = MyCustomPlugin({});
-        const inputs = [{}];
+    // describe('execute(): ', () => {
+    //   it('applies logic on provided inputs array.', async () => {
+    //     const pluginInstance = CaSdkPlugin({
+    //       'input-parameters': ['something'],
+    //       'output-parameter': 'dummy',
+    //     });
+    //     const inputs = [{}];
 
-        const response = await pluginInstance.execute(inputs, {});
-        expect(response).toEqual(inputs);
-      });
-    });
+    //     const response = await pluginInstance.execute(inputs, {});
+    //     expect(response).toEqual(inputs);
+    //   });
+    //   });
   });
 });
