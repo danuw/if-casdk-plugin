@@ -31,19 +31,19 @@
   },
   "keywords": [],
   "license": "MIT",
-  "main": "build/index.js",
+  "main": "build/src/index.js",
   "repository": {
     "url": "https://github.com/Green-Software-Foundation/if-plugin-template.git"
   },
   "scripts": {
     "build": "npm run clean && tsc --project tsconfig.json",
+    "clean": "rimraf /build",
     "coverage": "jest --verbose --coverage",
     "fix": "gts fix",
     "fix:package": "fixpack",
     "lint": "gts lint",
     "prepare": "husky install",
     "prepublish": "npm run build",
-    "test": "jest --verbose",
-    "clean": "rimraf /build"
+    "test": "jest --verbose"
   }
 }
