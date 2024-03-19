@@ -57,33 +57,33 @@ jobs:
           # The content of the file
           content: |
             name: casdk
-              description:
-              tags:
-              initialize:
-                plugins:
-                  casdk: 
-                    path: if-casdk-plugin
-                    method: CaSdkPlugin
-                    global-config:
-                      regions: 'uksouth'
-              
-              tree:
-                children:
-                  child-0:
-                    defaults:
-                      cpu/thermal-design-power: 100
-                    pipeline:
-                      - casdk
-                    inputs:
-                      - timestamp: 2023-07-06T00:00
-                        duration: 1
-                        cpu/utilization: 20.5
-                      - timestamp: 2023-07-06T00:01
-                        duration: 1
-                        cpu/utilization: 80
-                      - timestamp: 2023-07-06T00:02
-                        duration: 1
-                        cpu/utilization: 20
+            description:
+            tags:
+            initialize:
+              plugins:
+                casdk: 
+                  path: if-casdk-plugin
+                  method: CaSdkPlugin
+                  global-config:
+                    regions: 'uksouth'
+            
+            tree:
+              children:
+                child-0:
+                  defaults:
+                    cpu/thermal-design-power: 100
+                  pipeline:
+                    - casdk
+                  inputs:
+                    - timestamp: 2023-07-06T00:00
+                      duration: 1
+                      cpu/utilization: 20.5
+                    - timestamp: 2023-07-06T00:01
+                      duration: 1
+                      cpu/utilization: 80
+                    - timestamp: 2023-07-06T00:02
+                      duration: 1
+                      cpu/utilization: 20
 
       - name: Check the file content (debug)
         run: pwd && ls
