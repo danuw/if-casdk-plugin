@@ -1,8 +1,7 @@
-import {CaSdkPlugin, CaSdkPluginConfig} from '../index';
+import {CaSdkPlugin, CaSdkPluginConfig} from '../src/lib/casdk/index';
 
 const config: CaSdkPluginConfig = {
-  'input-parameters': ['location'],
-  'output-parameter': 'CarbonIntensity',
+  regions: 'uksouth',
 };
 
 const sum = CaSdkPlugin(config);
@@ -12,7 +11,7 @@ async function main() {
     {
       duration: 5, // in minutes
       timestamp: '2024-03-01T00:00:00Z',
-      location: 'eastus',
+      location: config.regions,
     },
   ]);
   console.log(Promise.resolve(result));
