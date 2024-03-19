@@ -5,8 +5,7 @@ import {getBestEmissionsDataForLocationsByTime} from './api';
 //import { GetCarbonRatingResponseParams } from './types/caTypes';
 
 export type CaSdkPluginConfig = {
-  'input-parameters': string[];
-  'output-parameter': string;
+  regions: string;
 };
 
 /// -l eastus,uksouth -s 2022-08-23T11:15 -e 2022-08-23T11:20
@@ -37,18 +36,15 @@ export const CaSdkPlugin = (
    * Calculate the sum of each .
    */
   const execute = async (inputs: PluginParams[]): Promise<PluginParams[]> => {
-    // const safeGlobalConfig = safeGlobalConfig();
-    // const inputParameters = safeGlobalConfig['input-parameters'];
-    // const outputParameter = safeGlobalConfig['output-parameter'];
-
-    const inputParameters = globalConfig['input-parameters'];
-    const outputParameter = globalConfig['output-parameter'];
-
     const out = await Promise.all(
       inputs.map(async input => {
         const safeInput = input; // TODO validateSingleInput(input, inputParameters);
-        const response = await getCarbonRating(safeInput, inputParameters);
-        const output = {...safeInput, [outputParameter]: response[0].rating};
+        const response = await getCarbonRating(input);
+        const output = {
+          ...safeInput,
+          'casdk-region': response[0].location,
+          'casdk-rating': response[0].rating,
+        };
         return output;
       })
     );
@@ -59,18 +55,17 @@ export const CaSdkPlugin = (
   /**
    * Calculates the sum of the energy components.
    */
-  const getCarbonRating = async (
-    input: PluginParams,
-    inputParameters: string[]
-  ): Promise<any> => {
-    console.log('input: ', input);
-    console.log('inputParameters: ', inputParameters);
+  const getCarbonRating = async (input: PluginParams): Promise<any> => {
     //let carbonRating = new CarbonAwareApi().getAverageCarbonIntensity(input['cloud/region-geolocation'], input['timestamp'], input['duration']);
     //"http://localhost:5073"
+    const regions = globalConfig.regions;
+    const start = new Date(input.timestamp);
+    const end = new Date();
+    end.setSeconds(start.getSeconds() + input.duration);
     const response = await getBestEmissionsDataForLocationsByTime({
-      location: 'eastus',
-      start: new Date('2022-08-23T11:15'),
-      end: new Date('2022-08-23T11:20'),
+      location: regions,
+      start: start,
+      end: end,
     });
 
     return Promise.resolve(response);
