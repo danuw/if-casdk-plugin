@@ -1,9 +1,11 @@
-import {MyCustomPlugin} from '../../../lib/my-custom-plugin';
+import {CaSdkPlugin} from '../../../lib/casdk';
 
 describe('lib/my-custom-plugin: ', () => {
   describe('MyCustomPlugin(): ', () => {
     it('has metadata field.', () => {
-      const pluginInstance = MyCustomPlugin({});
+      const pluginInstance = CaSdkPlugin({
+        regions: 'uksouth',
+      });
 
       expect(pluginInstance).toHaveProperty('metadata');
       expect(pluginInstance).toHaveProperty('execute');
@@ -13,11 +15,20 @@ describe('lib/my-custom-plugin: ', () => {
 
     describe('execute(): ', () => {
       it('applies logic on provided inputs array.', async () => {
-        const pluginInstance = MyCustomPlugin({});
-        const inputs = [{}];
-
+        const pluginInstance = CaSdkPlugin({
+          regions: 'uksouth',
+        });
+        const inputs = [
+          {
+            timestamp: '2023-07-06T00:02',
+            duration: 1,
+            'cpu/utilization': 20,
+          },
+        ];
         const response = await pluginInstance.execute(inputs, {});
-        expect(response).toEqual(inputs);
+        expect(response[0]).toHaveProperty('casdk-rating');
+        expect(response[0]).toHaveProperty('casdk-region');
+        expect(response[0]['casdk-rating']).toBeGreaterThan(0);
       });
     });
   });
