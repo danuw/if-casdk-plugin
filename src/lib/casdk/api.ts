@@ -31,31 +31,18 @@ export const getAverageCarbonIntensity = async (
   const result = await axios
     .get(baseUrl + '/emissions/bylocations', {
       params: params,
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
     })
     .catch(error => {
       throw new Error(error);
     });
 
-  // if (result.status !== 200) {
-  //   throw new APIRequestError(
-  //     errorBuilder({
-  //       message: `Error fetching data from WattTime API: ${JSON.stringify(
-  //         result.status
-  //       )}`,
-  //     })
-  //   );
-  // }
+  if (result.status !== 200) {
+    throw new Error('API failure code: {result.status}');
+  }
 
-  // if (!('data' in result) || !Array.isArray(result.data)) {
-  //   throw new APIRequestError(
-  //     errorBuilder({
-  //       message: 'Invalid response from WattTime API',
-  //     })
-  //   );
-  // }
+  if (!('data' in result) || !Array.isArray(result.data)) {
+    throw new Error('Invalid response from CA-SDK API');
+  }
 
   return result.data;
 };
