@@ -93,7 +93,3 @@ jobs:
 
       - name: Run the plug in
         run: npm run ie -- --manifest ./examples/manifests/casdk.yml
-
-
-
-https://github.com/danuw/if-casdk-plugin.git
