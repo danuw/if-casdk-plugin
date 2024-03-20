@@ -46,7 +46,7 @@ jobs:
         run: npm install
 
       - name: Install this plug in
-        run: npm install https://github.com/danuw/if-casdk-plugin.git
+        run: npm install https://github.com/danuw/if-casdk-plugin.git#${{github.ref_name}}
 
       - name: Setup the manifest
         uses: 1arp/create-a-file-action@0.4.4
