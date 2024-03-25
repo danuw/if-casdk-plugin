@@ -24,3 +24,73 @@ jobs:
 
       - name: Run tests
         run: npm run test --silent
+
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Check out IF repo
+        uses: actions/checkout@v3
+        with:
+          repository: Green-Software-Foundation/if
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install this plug in
+        run: npm install https://github.com/danuw/if-casdk-plugin.git#${{github.ref_name}}
+
+      - name: Setup the manifest
+        uses: 1arp/create-a-file-action@0.4.4
+        with:
+          # Path from cwd where file is to be created
+          path: ./examples/manifests/
+          # The name of the file to be created with extention
+          file: casdk.yml
+          # The content of the file
+          content: |
+            name: casdk
+            description:
+            tags:
+            initialize:
+              plugins:
+                casdk: 
+                  path: if-casdk-plugin
+                  method: CaSdkPlugin
+                  global-config:
+                    regions: 'uksouth'
+            
+            tree:
+              children:
+                child-0:
+                  defaults:
+                    cpu/thermal-design-power: 100
+                  pipeline:
+                    - casdk
+                  inputs:
+                    - timestamp: 2023-07-06T00:00
+                      duration: 1
+                      cpu/utilization: 20.5
+                    - timestamp: 2023-07-06T00:01
+                      duration: 1
+                      cpu/utilization: 80
+                    - timestamp: 2023-07-06T00:02
+                      duration: 1
+                      cpu/utilization: 20
+
+      - name: Check the file content (debug)
+        run: pwd && ls
+
+      - name: Check the file content (debug)
+        run: cat ./examples/manifests/casdk.yml
+
+      - name: Run the plug in
+        run: npm run ie -- --manifest ./examples/manifests/casdk.yml
