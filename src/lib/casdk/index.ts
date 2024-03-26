@@ -63,7 +63,7 @@ export const CaSdkPlugin = (
     const end = new Date();
     end.setSeconds(start.getSeconds() + input.duration);
     const response = await getBestEmissionsDataForLocationsByTime({
-      location: regions,
+      location: regions.split(','),
       start: start,
       end: end,
     });

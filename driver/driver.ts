@@ -1,7 +1,7 @@
 import {CaSdkPlugin, CaSdkPluginConfig} from '../src/lib/casdk/index';
 
 const config: CaSdkPluginConfig = {
-  regions: 'uksouth',
+  regions: 'uksouth,eastus',
 };
 
 const sum = CaSdkPlugin(config);
