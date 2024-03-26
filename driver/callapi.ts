@@ -13,10 +13,15 @@ const regions = config.regions;
 const start = new Date(input.timestamp);
 const end = new Date();
 end.setSeconds(start.getSeconds() + input.duration);
-const response = await getBestEmissionsDataForLocationsByTime({
-  location: regions.split(','),
-  start: start,
-  end: end,
-});
 
-console.log(response);
+async function main() {
+    const response = await getBestEmissionsDataForLocationsByTime({
+    location: regions.split(','),
+    start: start,
+    end: end,
+    });
+
+    console.log(Promise.resolve(response));
+}
+
+main();
