@@ -1,10 +1,10 @@
-import {CaSdkPlugin} from '../../../lib/casdk';
+import { CaSdkPlugin } from '../../../lib/casdk';
 
 describe('lib/my-custom-plugin: ', () => {
   describe('MyCustomPlugin(): ', () => {
     it('has metadata field.', () => {
       const pluginInstance = CaSdkPlugin({
-        regions: 'uksouth',
+        regions: ['uksouth'],
       });
 
       expect(pluginInstance).toHaveProperty('metadata');
@@ -15,7 +15,7 @@ describe('lib/my-custom-plugin: ', () => {
 
     it('has multi regions metadata field.', () => {
       const pluginInstance = CaSdkPlugin({
-        regions: 'uksouth,eastus',
+        regions: ['uksouth', 'eastus'],
       });
 
       expect(pluginInstance).toHaveProperty('metadata');
@@ -27,7 +27,7 @@ describe('lib/my-custom-plugin: ', () => {
     describe('execute(): ', () => {
       it('applies logic on provided inputs array.', async () => {
         const pluginInstance = CaSdkPlugin({
-          regions: 'uksouth',
+          regions: ['uksouth', 'eastus'],
         });
         const inputs = [
           {
@@ -45,7 +45,7 @@ describe('lib/my-custom-plugin: ', () => {
     describe('execute(): ', () => {
       it('applies logic on provided inputs array for multi regions.', async () => {
         const pluginInstance = CaSdkPlugin({
-          regions: 'uksouth,eastus',
+          regions: ['uksouth', 'eastus'],
         });
         const inputs = [
           {

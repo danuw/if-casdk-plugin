@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { stringify } from 'qs';
+import {stringify} from 'qs';
 import {
   GetBestCarbonRatingParams,
   GetCarbonRatingParams,
@@ -12,7 +12,9 @@ export const getBestEmissionsDataForLocationsByTime = async (
   const result = await axios
     .get(baseUrl + '/emissions/bylocations/best', {
       params: params,
-      paramsSerializer: params => { return stringify(params) }
+      paramsSerializer: params => {
+        return stringify(params);
+      },
     })
     .catch(error => {
       throw new Error(error);

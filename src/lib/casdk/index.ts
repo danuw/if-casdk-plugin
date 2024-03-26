@@ -5,7 +5,7 @@ import {getBestEmissionsDataForLocationsByTime} from './api';
 //import { GetCarbonRatingResponseParams } from './types/caTypes';
 
 export type CaSdkPluginConfig = {
-  regions: string;
+  regions: string[];
 };
 
 /// -l eastus,uksouth -s 2022-08-23T11:15 -e 2022-08-23T11:20
@@ -63,7 +63,7 @@ export const CaSdkPlugin = (
     const end = new Date();
     end.setSeconds(start.getSeconds() + input.duration);
     const response = await getBestEmissionsDataForLocationsByTime({
-      location: regions.split(','),
+      location: regions,
       start: start,
       end: end,
     });
