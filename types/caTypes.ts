@@ -1,4 +1,5 @@
 export interface GetBestCarbonRatingParams {
+  baseUrl: string;
   location: string[];
   start: Date;
   end: Date;

@@ -6,6 +6,7 @@ import {getBestEmissionsDataForLocationsByTime} from './api';
 
 export type CaSdkPluginConfig = {
   regions: string[];
+  baseUrl: string;
 };
 
 /// -l eastus,uksouth -s 2022-08-23T11:15 -e 2022-08-23T11:20
@@ -62,7 +63,10 @@ export const CaSdkPlugin = (
     const start = new Date(input.timestamp);
     const end = new Date();
     end.setSeconds(start.getSeconds() + input.duration);
+    console.log(start, end, regions);
+    console.log(input.duration, input.timestamp, regions);
     const response = await getBestEmissionsDataForLocationsByTime({
+      baseUrl: globalConfig.baseUrl,
       location: regions,
       start: start,
       end: end,
