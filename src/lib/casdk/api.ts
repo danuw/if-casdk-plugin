@@ -8,7 +8,7 @@ import {
 export const getBestEmissionsDataForLocationsByTime = async (
   params: GetBestCarbonRatingParams
 ) => {
-  const baseUrl = params.baseUrl;// 'https://carbon-aware-api.azurewebsites.net';
+  const baseUrl = params.baseUrl; // 'https://carbon-aware-api.azurewebsites.net';
   const result = await axios
     .get(baseUrl + '/emissions/bylocations/best', {
       params: params,
@@ -31,7 +31,7 @@ export const getBestEmissionsDataForLocationsByTime = async (
 export const getAverageCarbonIntensity = async (
   params: GetCarbonRatingParams
 ) => {
-  const baseUrl = "";// 'https://carbon-aware-api.azurewebsites.net';
+  const baseUrl = ''; // 'https://carbon-aware-api.azurewebsites.net';
   const result = await axios
     .get(baseUrl + '/emissions/bylocations', {
       params: params,
