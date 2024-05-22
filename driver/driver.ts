@@ -1,4 +1,4 @@
-import { CaSdkPlugin, CaSdkPluginConfig } from '../src/lib/casdk/index';
+import {CaSdkPlugin, CaSdkPluginConfig} from '../src/lib/casdk/index';
 
 const config: CaSdkPluginConfig = {
   regions: ['uksouth', 'eastus'],
