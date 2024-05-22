@@ -1,4 +1,4 @@
-import {CaSdkPlugin, CaSdkPluginConfig} from '../src/lib/casdk/index';
+import { CaSdkPlugin, CaSdkPluginConfig } from '../src/lib/casdk/index';
 
 const config: CaSdkPluginConfig = {
   regions: ['uksouth', 'eastus'],
@@ -15,7 +15,7 @@ async function main() {
       location: config.regions,
     },
   ]);
-  console.log(Promise.resolve(result));
+  console.log(result);
 }
 
 main();
