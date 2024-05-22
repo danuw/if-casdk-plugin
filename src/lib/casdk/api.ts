@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { stringify } from 'qs';
 import {
   GetBestCarbonRatingParams,
   GetCarbonRatingParams,
@@ -9,12 +8,16 @@ export const getBestEmissionsDataForLocationsByTime = async (
   params: GetBestCarbonRatingParams
 ) => {
   const baseUrl = params.baseUrl; // 'https://carbon-aware-api.azurewebsites.net';
-  const queryParams: object = { location: params.location, start: params.start, end: params.end }
+  const queryParams: object = {
+    location: params.location,
+    start: params.start,
+    end: params.end,
+  };
   const result = await axios
     .get(baseUrl + '/emissions/bylocations/best', {
       params: queryParams,
-      paramsSerializer: params => {
-        return stringify(params);
+      paramsSerializer: {
+        indexes: null,
       },
     })
     .catch(error => {
