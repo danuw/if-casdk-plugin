@@ -1,22 +1,23 @@
 {
   "name": "if-casdk-plugin",
   "description": "Impact Framework plugin for the Carbon Aware SDK",
-  "version": "v0.0.1",
+  "version": "v0.0.2",
   "author": {
     "name": "Green Software Foundation",
     "email": "info@gsf.com"
   },
   "dependencies": {
     "axios": "^1.6.7",
+    "qs": "^6.12.0",
     "typescript": "^5.1.6"
   },
   "devDependencies": {
     "@babel/core": "7.22.10",
     "@babel/preset-typescript": "^7.22.5",
-
     "@jest/globals": "^29.6.1",
     "@types/jest": "^29.5.7",
     "@types/node": "^20.4.5",
+    "@types/qs": "^6.9.14",
     "fixpack": "^4.0.0",
     "gts": "^5.0.0",
     "husky": "^8.0.0",

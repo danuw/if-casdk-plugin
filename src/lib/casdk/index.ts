@@ -5,7 +5,8 @@ import {getBestEmissionsDataForLocationsByTime} from './api';
 //import { GetCarbonRatingResponseParams } from './types/caTypes';
 
 export type CaSdkPluginConfig = {
-  regions: string;
+  regions: string[];
+  baseUrl: string;
 };
 
 /// -l eastus,uksouth -s 2022-08-23T11:15 -e 2022-08-23T11:20
@@ -44,6 +45,7 @@ export const CaSdkPlugin = (
           ...safeInput,
           'casdk-region': response[0].location,
           'casdk-rating': response[0].rating,
+          timestamp: response[0].time,
         };
         return output;
       })
@@ -52,6 +54,11 @@ export const CaSdkPlugin = (
     return out;
   };
 
+  const addSeconds = (date: string, n: number) => {
+    const d = new Date(date);
+    d.setTime(d.getTime() + n * 1000);
+    return d;
+  };
   /**
    * Calculates the sum of the energy components.
    */
@@ -60,9 +67,11 @@ export const CaSdkPlugin = (
     //"http://localhost:5073"
     const regions = globalConfig.regions;
     const start = new Date(input.timestamp);
-    const end = new Date();
-    end.setSeconds(start.getSeconds() + input.duration);
+    const end = new Date(addSeconds(input.timestamp, input.duration));
+    console.log('start, END, REGIONS', start, end, regions), input.duration;
+    console.log(input.duration, input.timestamp, regions);
     const response = await getBestEmissionsDataForLocationsByTime({
+      baseUrl: globalConfig.baseUrl,
       location: regions,
       start: start,
       end: end,
