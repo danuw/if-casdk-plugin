@@ -10,9 +10,10 @@ export const getBestEmissionsDataForLocationsByTime = async (
   const baseUrl = params.baseUrl; // 'https://carbon-aware-api.azurewebsites.net';
   const queryParams: object = {
     location: params.location,
-    start: params.start,
-    end: params.end,
+    time: params.start.toISOString(),
+    to_time: params.end.toISOString(),
   };
+  console.log(queryParams);
   const result = await axios
     .get(baseUrl + '/emissions/bylocations/best', {
       params: queryParams,
