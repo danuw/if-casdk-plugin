@@ -45,6 +45,7 @@ export const CaSdkPlugin = (
           ...safeInput,
           'casdk-region': response[0].location,
           'casdk-rating': response[0].rating,
+          timestamp: response[0].time,
         };
         return output;
       })

@@ -12,7 +12,7 @@ export const getBestEmissionsDataForLocationsByTime = async (
   const queryParams: object = {
     location: params.location,
     time: params.start.toISOString(),
-    to_time: params.end.toISOString(),
+    toTime: params.end.toISOString(),
   };
 
   console.log(queryParams);
@@ -28,7 +28,7 @@ export const getBestEmissionsDataForLocationsByTime = async (
     .catch(error => {
       throw new Error(error);
     });
-
+    
   return result.data;
 };
 
