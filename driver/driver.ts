@@ -2,7 +2,7 @@ import {CaSdkPlugin, CaSdkPluginConfig} from '../src/lib/casdk/index';
 
 const config: CaSdkPluginConfig = {
   regions: ['uksouth', 'eastus'],
-  baseUrl: 'https://carbon-aware-api.azurewebsites.net',//'http://localhost:5073'
+  baseUrl: 'https://carbon-aware-api.azurewebsites.net', //'http://localhost:5073'
 };
 
 const sum = CaSdkPlugin(config);

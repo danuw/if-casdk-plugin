@@ -28,7 +28,7 @@ export const getBestEmissionsDataForLocationsByTime = async (
     .catch(error => {
       throw new Error(error);
     });
-    
+
   return result.data;
 };
 
