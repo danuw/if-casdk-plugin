@@ -1,4 +1,5 @@
 import axios from 'axios';
+const qs = require('qs');
 import {
   GetBestCarbonRatingParams,
   GetCarbonRatingParams,
@@ -13,13 +14,16 @@ export const getBestEmissionsDataForLocationsByTime = async (
     time: params.start.toISOString(),
     to_time: params.end.toISOString(),
   };
+
   console.log(queryParams);
   const result = await axios
     .get(baseUrl + '/emissions/bylocations/best', {
       params: queryParams,
-      paramsSerializer: {
-        indexes: null,
-      },
+      paramsSerializer: params =>
+        qs.stringify(params, {
+          indexes: null,
+          encode: false,
+        }),
     })
     .catch(error => {
       throw new Error(error);
