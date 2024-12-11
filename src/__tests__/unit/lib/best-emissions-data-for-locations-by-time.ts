@@ -1,9 +1,9 @@
-import {CaSdkPlugin} from '../../../lib/casdk';
+import {BestEmissionsDataForLocationsByTime} from '../../../lib/best-emissions-data-for-locations-by-time';
 
-describe('lib/my-custom-plugin: ', () => {
-  describe('MyCustomPlugin(): ', () => {
+describe('lib/best-emissions-data-for-locations-by-time: ', () => {
+  describe('BestEmissionsDataForLocationsByTime(): ', () => {
     it('has metadata field.', () => {
-      const pluginInstance = CaSdkPlugin({
+      const pluginInstance = BestEmissionsDataForLocationsByTime({
         regions: ['uksouth'],
         baseUrl: 'https://carbon-aware-api.azurewebsites.net',
       });
@@ -15,7 +15,7 @@ describe('lib/my-custom-plugin: ', () => {
     });
 
     it('has multi regions metadata field.', () => {
-      const pluginInstance = CaSdkPlugin({
+      const pluginInstance = BestEmissionsDataForLocationsByTime({
         regions: ['uksouth', 'eastus'],
         baseUrl: 'https://carbon-aware-api.azurewebsites.net',
       });
@@ -28,7 +28,7 @@ describe('lib/my-custom-plugin: ', () => {
 
     describe('execute(): ', () => {
       it('applies logic on provided inputs array.', async () => {
-        const pluginInstance = CaSdkPlugin({
+        const pluginInstance = BestEmissionsDataForLocationsByTime({
           regions: ['uksouth', 'eastus'],
           baseUrl: 'https://carbon-aware-api.azurewebsites.net',
         });
@@ -47,7 +47,7 @@ describe('lib/my-custom-plugin: ', () => {
     });
     describe('execute(): ', () => {
       it('applies logic on provided inputs array for multi regions.', async () => {
-        const pluginInstance = CaSdkPlugin({
+        const pluginInstance = BestEmissionsDataForLocationsByTime({
           regions: ['uksouth', 'eastus'],
           baseUrl: 'https://carbon-aware-api.azurewebsites.net',
         });
