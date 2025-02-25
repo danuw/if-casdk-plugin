@@ -1,6 +1,9 @@
 name: Node.js CI
 
-on: push
+on:
+  pull_request:
+    branches: [ dev, main ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -18,6 +21,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - name: Run lint
         run: npm run lint
@@ -45,8 +50,18 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Setup .npmrc
+        uses: 1arp/create-a-file-action@0.4.4
+        with:
+          path: ./
+          file: .npmrc
+          content: |
+            //npm.pkg.github.com/:_authToken=${{ github.token }}
+            @Green-Software-Foundation:registry=https://npm.pkg.github.com
+
       - name: Install this plug in
-        run: npm install https://github.com/danuw/if-casdk-plugin.git#${{github.ref_name}}
+        run: |
+          npm install https://github.com/${{github.repository}}.git#${{github.ref}}
 
       - name: Setup the manifest
         uses: 1arp/create-a-file-action@0.4.4
@@ -54,7 +69,7 @@ jobs:
           # Path from cwd where file is to be created
           path: ./examples/manifests/
           # The name of the file to be created with extention
-          file: casdk.yml
+          file: casdk.yaml
           # The content of the file
           content: |
             name: casdk
@@ -64,9 +79,11 @@ jobs:
               plugins:
                 casdk: 
                   path: if-casdk-plugin
-                  method: CaSdkPlugin
-                  global-config:
-                    regions: 'uksouth,westeurope'
+                  method: BestEmissionsDataForLocationsByTime
+                  config:
+                    regions:
+                      - uksouth
+                      - westeurope
                     baseUrl: 'https://carbon-aware-api.azurewebsites.net'
             
             tree:
@@ -75,7 +92,8 @@ jobs:
                   defaults:
                     cpu/thermal-design-power: 100
                   pipeline:
-                    - casdk
+                    compute:
+                      - casdk
                   inputs:
                     - timestamp: 2023-07-06T00:00
                       duration: 1
@@ -91,7 +109,13 @@ jobs:
         run: pwd && ls
 
       - name: Check the file content (debug)
-        run: cat ./examples/manifests/casdk.yml
+        run: cat ./examples/manifests/casdk.yaml
 
       - name: Run the plug in
-        run: npm run ie -- --manifest ./examples/manifests/casdk.yml
+        run: |
+          npm run if-run -- --manifest ./examples/manifests/casdk.yaml -o ./result.yaml
+          cat ./result.yaml
+          IF_RESULT=`cat ./result.yaml | yq .execution.status`
+          if [ "$IF_RESULT" != 'success' ]; then
+            exit 1
+          fi

@@ -1,10 +1,12 @@
 import {PluginInterface} from '../../../interfaces';
 import {PluginParams} from '../../../types/common';
 
-import {getBestEmissionsDataForLocationsByTime} from './api';
-//import { GetCarbonRatingResponseParams } from './types/caTypes';
+import {
+  CarbonAwareApi,
+  Configuration,
+} from '@Green-Software-Foundation/casdk-client';
 
-export type CaSdkPluginConfig = {
+export type BestEmissionsDataForLocationsByTimeConfig = {
   regions: string[];
   baseUrl: string;
 };
@@ -26,12 +28,15 @@ export type CaSdkPluginConfig = {
 // 'cloud/region-location': regionInput['location'],
 // 'cloud/region-geolocation': regionInput['cloud/region-geolocation'],
 
-export const CaSdkPlugin = (
-  globalConfig: CaSdkPluginConfig
+export const BestEmissionsDataForLocationsByTime = (
+  globalConfig: BestEmissionsDataForLocationsByTimeConfig
 ): PluginInterface => {
   const metadata = {
     kind: 'execute',
   };
+
+  const conf = new Configuration({basePath: globalConfig.baseUrl});
+  const caApi = new CarbonAwareApi(conf);
 
   /**
    * Calculate the sum of each .
@@ -45,7 +50,7 @@ export const CaSdkPlugin = (
           ...safeInput,
           'casdk-region': response[0].location,
           'casdk-rating': response[0].rating,
-          timestamp: response[0].time,
+          'casdk-timestamp': response[0].time,
         };
         return output;
       })
@@ -68,16 +73,15 @@ export const CaSdkPlugin = (
     const regions = globalConfig.regions;
     const start = new Date(input.timestamp);
     const end = new Date(addSeconds(input.timestamp, input.duration));
-    console.log('start, END, REGIONS', start, end, regions), input.duration;
-    console.log(input.duration, input.timestamp, regions);
-    const response = await getBestEmissionsDataForLocationsByTime({
-      baseUrl: globalConfig.baseUrl,
-      location: regions,
-      start: start,
-      end: end,
-    });
+    console.debug('start, END, REGIONS', start, end, regions), input.duration;
+    console.debug(input.duration, input.timestamp, regions);
+    const response = await caApi.getBestEmissionsDataForLocationsByTime(
+      regions,
+      start.toISOString(),
+      end.toISOString()
+    );
 
-    return Promise.resolve(response);
+    return Promise.resolve(response.data);
   };
 
   return {

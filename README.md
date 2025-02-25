@@ -20,13 +20,16 @@ Follow the steps below to install the plugin:
 2. Navigate to the cloned repository and run `npm i` to install the necessary dependencies.
 3. Run `npx ts-node driver/driver.ts` to test the plugin.
 
+> [!NOTE]
 > Note that this repo defaults to using the following test instance of the SDK at: https://carbon-aware-api.azurewebsites.net/swagger/index.html (at the time of writing this uses a test account for WattTime and should _**only be used for punctual testing**_).
-Make sure to update it accordingly to your needs for regular use or other scenarios.
+> Make sure to update it accordingly to your needs for regular use or other scenarios.
+
+> [!IMPORTANT]
+> This plugin depends on [official client library of Carbon Aware SDK WebAPI](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pkgs/npm/casdk-client). It is provided by GitHub Packages, so you need to use GitHub Parsonal Access Token (PAT) to install. You can set it to `GH_TOKEN` environment variable. If you have not yet got GitHub PAT, see [this guide](https://docs.github.com/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) for details.
 
 ## Installation
 
 For more detailed instructions for integrating the plugin with the Impact Framework please checkout the [official documentation](https://if.greensoftware.foundation/developers/how-to-build-plugins#step-4-load-your-plugin-into-if) as well as the provided [tests](./src/__tests__/unit/lib/casdk-plugin.ts) and [Github Action workflow](./.github/workflows/nodejs-ci.yml).
-
 
 ## Local version of the SDK
 
